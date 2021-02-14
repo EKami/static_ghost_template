@@ -1,0 +1,35 @@
+# Use https://github.com/nektos/act to run locally
+name: Netlify-deploy
+
+# Run this workflow every time a new commit pushed to your repository
+on: push
+
+jobs:
+  # Set the job key. The key is displayed as the job name
+  # when a job name is not provided
+  deploy:
+    # Name the Job
+    name: Generate static content from Ghost and push to Netlify
+    # Set the type of machine to run on
+    runs-on: ubuntu-latest
+    env:
+      BUILD_FOLDER: dist
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run local ghost server
+        run: ./launch_local_editor.sh
+      
+      - name: Compile static code
+        run: ./deploy_static.sh
+
+      - name: Deploy to netlify
+        uses: jsmrcaga/action-netlify-deploy@v1.5.0
+        with:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_DEPLOY_MESSAGE: "Prod deploy v${{ github.run_number }}"
+          build_directory: ${{ env.BUILD_FOLDER }}
+          NETLIFY_DEPLOY_TO_PROD: true
