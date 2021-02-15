@@ -13,6 +13,10 @@ But first we need some configuration.
     3. Just edit your articles on your locally running editor at `http://localhost:2368/ghost`
     4. Commit your changes + `git push` and you're done, you can go to the Github "Actions" tab on your repository page to check the deployment progress
 
+# Debug static deploy in local
+
+Run `./deploy_static.sh` and then move to `dist` and run: `python -m http.server 8000`
+
 # Alternatives?
 
 [CloudFlare pages](https://pages.cloudflare.com/) will be interesting when it will get released.
