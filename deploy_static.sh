@@ -12,4 +12,8 @@ DOMAIN=http://localhost:2368
 docker rm -f $CONTAINER_NAME || true
 $DIR/launch_local_editor.sh
 
+echo "Waiting for ghost to finish initialization..."
+# We can end up with a page "Site is starting up, please wait a moment then retry." with the CI if we don't do that
+sleep 10
+
 docker exec $CONTAINER_NAME gssg --domain ${DOMAIN} --url ${WEB_URL}
