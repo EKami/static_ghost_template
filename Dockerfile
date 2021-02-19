@@ -13,6 +13,7 @@ RUN apt-get update \
     git \
     wget \
     npm \
+    sudo \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
